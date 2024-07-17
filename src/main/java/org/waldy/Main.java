@@ -1,17 +1,21 @@
 package org.waldy;
 
+import org.waldy.model.GameResult;
+import org.waldy.model.ParsedInput;
+import org.waldy.service.GameService;
+import org.waldy.utility.InputParser;
+import org.waldy.utility.OutputWriter;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        InputParser parser = new InputParser("src/main/resources/input.txt");
+        ParsedInput parsedInput = parser.parse();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        GameService gameService = new GameService();
+        GameResult result = gameService.play(parsedInput.getPlayer1(), parsedInput.getPlayer2());
+
+        OutputWriter.writeResult("output.txt", result);
     }
 }
